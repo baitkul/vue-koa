@@ -12,13 +12,20 @@ router.route({
       sort: Joi.string().regex(/^(asc|desc)$/),
       page: Joi.number().integer().positive(),
       count: Joi.number().integer().positive(),
-      title: Joi.string(),
-      date: Joi.string(),
-      author: Joi.string(),
-      description: Joi.string(),
+      search: Joi.string().alphanum(),
     }
   },
   handler: controller.get
+})
+
+router.route({
+  method: 'get',
+  path: '/:id',
+  validate: {
+    params: { id: Joi.number().integer().positive()
+    }
+  },
+  handler: controller.getOne
 })
 
 router.route({
