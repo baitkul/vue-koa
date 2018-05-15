@@ -5,7 +5,7 @@ import Qs from 'qs'
 import moment from 'moment'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3030/api/books',
+  baseURL: `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3030}/api/books`,
   headers: { 'X-Requested-With': 'XMLHttpRequest' },
   timeout: 1000,
   paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'brackets' }),
@@ -15,7 +15,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    list: [{ id: 1, title: 'Test', author: 'Pushkin', description: 'tttt', date: Date.now() }],
+    list: [],
     total: 0,
   },
 
@@ -36,12 +36,12 @@ export default new Vuex.Store({
     getList({ commit }) {
       return api.get()
         .then(res => commit('SET_LIST', res))
-        .catch(console.err)
+        .catch(console.err) // eslint-disable-line no-console
     },
 
     create(context, payload) {
       return api.post('', payload)
-        .catch(console.err)
+        .catch(console.err) // eslint-disable-line no-console
     },
 
     update(context, payload) {
@@ -49,19 +49,18 @@ export default new Vuex.Store({
       if (payload.date) payload.date = moment(payload.date).format('YYYY-MM-DD')
       delete payload.id
       return api.put(`/${id}`, payload)
-        .catch(console.err)
+        .catch(console.err) // eslint-disable-line no-console
     },
 
     destroy(context, id) {
       return api.delete(`/${id}`)
-        .catch(console.err)
+        .catch(console.err) // eslint-disable-line no-console
     },
 
     filter({ commit }, params) {
-      console.log(params)
       return api.get('', { params })
         .then(res => commit('SET_LIST', res))
-        .catch(console.err)
+        .catch(console.err) // eslint-disable-line no-console
     },
   },
 })
