@@ -61,6 +61,17 @@ router.route({
   handler: controller.update
 })
 
+router.route({
+  method: 'delete',
+  path: '/:id',
+  validate: {
+    params: {
+      id: Joi.number().integer().positive().required()
+    },
+  },
+  handler: controller.destroy
+})
+
 router.prefix('/api/books')
 
 export default router
