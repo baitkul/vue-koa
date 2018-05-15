@@ -3,7 +3,8 @@ import db from '../db'
 const Book = {}
 
 Book.get = async ({ field = 'id', sort = 'asc', page = 1, count = 10, search = '' }) => {
-  let sql = 'SELECT `id`, `title`, `author`, `description`, `date` FROM `books`'
+  let sqlBooks = 'SELECT `id`, `title`, `author`, `description`, `date` FROM `books`'
+  let sqlTotal = 'SELECT COUNT(`id`) as total FROM `books`'
 
   let values = [field, count, ((page - 1) * count)]
   const searchArray = new Array(3)
@@ -11,18 +12,21 @@ Book.get = async ({ field = 'id', sort = 'asc', page = 1, count = 10, search = '
   if (search) {
     searchArray.fill(`%${search}%`)
     values = [...searchArray, ...values]
-    sql += ' WHERE `title` LIKE ? OR `author` LIKE ? OR `description` LIKE ?'
+    sqlBooks += ' WHERE `title` LIKE ? OR `author` LIKE ? OR `description` LIKE ?'
+    sqlTotal += ' WHERE `title` LIKE ? OR `author` LIKE ? OR `description` LIKE ?'
   }
 
-  sql += ' ORDER BY ??'
+  sqlBooks += ' ORDER BY ??'
 
   if (sort === 'desc') {
-    sql += ' DESC'
+    sqlBooks += ' DESC'
   }
 
-  sql += ' LIMIT ? OFFSET ?'
+  sqlBooks += ' LIMIT ? OFFSET ?'
 
-  return db.query(sql, values)
+  const books = await db.query(sqlBooks, values)
+  const total = await db.query(sqlTotal, values)
+  return { books, total: total[0].total }
 }
 
 Book.getById = async (id) => {
