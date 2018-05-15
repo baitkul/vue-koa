@@ -2,7 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-const apiUrl = '/api/books'
+const api = axios.create({
+  baseURL: 'http://localhost:3030/api/books',
+  headers: { 'X-Requested-With': 'XMLHttpRequest' },
+  timeout: 1000,
+})
 
 Vue.use(Vuex)
 
@@ -23,20 +27,24 @@ export default new Vuex.Store({
 
   actions: {
     getList({ commit }) {
-      return axios.get(apiUrl)
+      return api.get()
         .then(res => commit('SET_LIST', res))
+        .catch(console.err)
     },
 
     create(context, data) {
-      return axios.create(`${apiUrl}`, data)
+      return api.create('', data)
+        .catch(console.err)
     },
 
     update(context, { id, data }) {
-      return axios.put(`${apiUrl}/${id}`, data)
+      return api.put(`/${id}`, data)
+        .catch(console.err)
     },
 
     destroy(context, id) {
-      return axios.delete(`${apiUrl}/${id}`)
+      return api.delete(`/${id}`)
+        .catch(console.err)
     }
   },
 })
