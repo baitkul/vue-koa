@@ -8,7 +8,8 @@ function generateBooks() {
     book.title = faker.company.bs()
     book.author = faker.fake('{{name.lastName}} {{name.firstName}}')
     book.description = faker.hacker.phrase()
-    book.date = moment(faker.date.past()).format('YYYY-MM-DD')
+    book.date = faker.date.past()
+    book.date = moment(book.date).format('YYYY-MM-DD')
 
     data.push(book)
   }
