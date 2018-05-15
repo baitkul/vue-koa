@@ -53,10 +53,11 @@ router.route({
       id: Joi.number().integer().positive().required()
     },
     body: {
-      title: Joi.string().required(),
-      date: Joi.string().required(),
-      author: Joi.string().required(),
-      description: Joi.string().required(),
+      id: Joi.number().integer().positive().optional(),
+      title: Joi.string().optional(),
+      date: Joi.string().optional(),
+      author: Joi.string().optional(),
+      description: Joi.string().optional(),
     },
     type: 'application/json'
   },

@@ -1,8 +1,8 @@
 <template>
-  <div class="home">
-    <h1>Books</h1>
+  <div class="home pv4">
+    <h1 class="tc w-100">Books</h1>
 
-    <div class="pa3 br3 bg-near-white">
+    <div class="pa3 br3 bg-near-white w-100">
       <div class="flex">
         <div class="flex flex-column items-start w-25">
           <span class="f6">Key words</span>
@@ -34,10 +34,25 @@
         </div>
       </div>
        <div class="flex">
-        <el-button class="mt3" type="primary" @click="handleSearch" icon="el-icon-search">Search</el-button>
-        <el-button class="mt3" type="warning" plain @click="handleClear" icon="el-icon-close">Clear</el-button>
+        <el-button
+          class="mt3"
+          type="primary"
+          @click="handleSearch"
+          icon="el-icon-search">Search</el-button>
+        <el-button
+          class="mt3"
+          type="warning"
+          plain
+          @click="handleClear"
+          icon="el-icon-close">Clear</el-button>
       </div>
     </div>
+
+    <el-button
+      type="primary"
+      plain icon="el-icon-plus"
+      class="mt4 w-auto"
+      @click="handleDialogOpen">Add book</el-button>
 
     <el-table
       class="w-100 mt4"
@@ -71,7 +86,7 @@
         label="Action">
         <template slot-scope="scope">
           <el-button
-            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+            @click="handleDialogOpen(scope.$index, scope.row)">Edit</el-button>
           <el-button
             type="danger"
             @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
@@ -90,7 +105,18 @@
         :total="total">
       </el-pagination>
     </div>
-    <BookForm :book="book"/>
+
+    <el-dialog
+      title="Tips"
+      width="30%"
+      :visible.sync="dialogVisible"
+      @close="handleDialogClose">
+      <BookForm ref="book" :book="book"/>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleDialogClose">Cancel</el-button>
+        <el-button type="primary" @click="handleDialogSubmit">Confirm</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -108,7 +134,7 @@ export default {
 
   data() {
     return {
-      dialogState: false,
+      dialogVisible: false,
       book: {},
       filters: {
         search: '',
@@ -132,6 +158,8 @@ export default {
       'getList',
       'destroy',
       'filter',
+      'create',
+      'update'
     ]),
 
     formatDate({ date }) {
@@ -173,6 +201,31 @@ export default {
         field: ''
       }
       this.getList()
+    },
+
+    handleDialogOpen(index, item) {
+      if (item) {
+        this.book = Object.assign({}, item)
+      }
+      this.dialogVisible = true
+    },
+
+    handleDialogClose() {
+      this.book = {}
+      this.dialogVisible = false
+    },
+
+    handleDialogSubmit() {
+      this.dialogVisible = false
+      if ('id' in this.book) {
+        this.update(this.book)
+          .then(() => this.getList())
+          .then(() => { this.book = {} })
+      } else {
+        this.create(this.book)
+          .then(() => this.getList())
+          .then(() => { this.book = {} })
+      }
     }
   },
 
@@ -188,6 +241,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: start;
 
   h1 {
     margin-bottom: 3rem;

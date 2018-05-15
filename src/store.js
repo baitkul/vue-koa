@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import Qs from 'qs'
+import moment from 'moment'
 
 const api = axios.create({
   baseURL: 'http://localhost:3030/api/books',
@@ -38,13 +39,16 @@ export default new Vuex.Store({
         .catch(console.err)
     },
 
-    create(context, data) {
-      return api.create('', data)
+    create(context, payload) {
+      return api.post('', payload)
         .catch(console.err)
     },
 
-    update(context, { id, data }) {
-      return api.put(`/${id}`, data)
+    update(context, payload) {
+      const { id } = payload
+      if (payload.date) payload.date = moment(payload.date).format('YYYY-MM-DD')
+      delete payload.id
+      return api.put(`/${id}`, payload)
         .catch(console.err)
     },
 
