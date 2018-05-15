@@ -9,10 +9,12 @@ router.route({
   path: '/',
   validate: {
     query: {
-      sort: Joi.string().regex(/^(asc|desc)$/),
-      page: Joi.number().integer().positive(),
-      count: Joi.number().integer().positive(),
-      search: Joi.string().alphanum(),
+      sort: Joi.string().regex(/^(asc|desc)$/).optional(),
+      page: Joi.number().integer().positive().optional(),
+      count: Joi.number().integer().positive().optional(),
+      search: Joi.string().optional(),
+      field: Joi.allow(['', 'title', 'date', 'author', 'description'])
+      // field: Joi.string().regex(/^(title|date|author|description)$/).optional()
     }
   },
   handler: controller.get
