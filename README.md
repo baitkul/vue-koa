@@ -1,25 +1,29 @@
 # Simple Koa and Vue.js app
 
-### Steps to setup up project
+#### Requirements: 
+> node.js > 8+ <br/>
+> vue-cli@3.0 npm install -g @vue/cli
 
-> 1. Create database or set up manually. Database name needs to be 'koa'<br/>
-> **npm run db:create**
->
->
-> 2. Create table 'books'<br/>
-> **npm run knex migrate:latest**
->
->
-> 3. Fill table with fake data<br/>
-> **npm run knex seed:run**
->
->
-> 4. Build Vue.js app<br/>
-> **npm run build**
->
->
-> 5. Start koa server<br/>
-> **npm run start**
->
->
-> 6. Open http://localhost:3030 in browser
+### Steps to setup up project
+```
+# Create database or set up manually. Database name needs to be 'koa'<br/>
+**npm run db:create**
+
+# Create table 'books'<br/>
+**npm run knex migrate:latest**
+
+
+# Fill table with fake data<br/>
+**npm run knex seed:run**
+
+
+# Build Vue.js app<br/>
+**npm run build**
+
+
+# Start koa server<br/>
+**npm run start**
+
+
+#Open http://localhost:3030 in browser
+```
