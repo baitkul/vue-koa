@@ -1,8 +1,8 @@
 # Simple Koa and Vue.js app
 
-### Steps to setup up database
+### Steps to setup up project
 
-> 1. Create database or set up manually. Database name needs to 'koa'<br/>
+> 1. Create database or set up manually. Database name needs to be 'koa'<br/>
 > **npm run db:create**
 >
 >
