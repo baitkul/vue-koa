@@ -4,6 +4,7 @@ import serve from 'koa-static'
 import path from 'path'
 import json from 'koa-json'
 import koaBodyparser from 'koa-bodyparser'
+import cors from '@koa/cors'
 
 // Local packages
 import router from './router'
@@ -12,6 +13,9 @@ async function start() {
   const app = new Koa()
   const host = process.env.HOST || '127.0.0.1'
   const port = process.env.PORT || 8080
+
+  // enable cors
+  app.use(cors())
 
   // dev logging
   app.use(logger())
