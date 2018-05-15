@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "PORT=8080 vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve",
+    "build": "PORT=3030 HOST=localhost vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "start": "node -r dotenv/config -r esm ./server",
     "dev": "nodemon -r dotenv/config -r esm ./server",
     "knex": "./node_modules/.bin/knex",
     "db:create": "echo 'CREATE DATABASE `koa` CHARACTER SET `utf8` COLLATE `utf8_general_ci`' | mysql -u root -p"
