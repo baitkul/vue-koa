@@ -8,7 +8,7 @@ const api = axios.create({
   baseURL: `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3030}/api/books`,
   headers: { 'X-Requested-With': 'XMLHttpRequest' },
   timeout: 1000,
-  paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'brackets' }),
+  paramsSerializer: (params) => Qs.stringify(params, { arrayFormat: 'brackets' }),
 })
 
 Vue.use(Vuex)
@@ -20,8 +20,8 @@ export default new Vuex.Store({
   },
 
   getters: {
-    list: state => state.list,
-    total: state => state.total
+    list: (state) => state.list,
+    total: (state) => state.total
   },
 
   mutations: {
@@ -35,7 +35,7 @@ export default new Vuex.Store({
   actions: {
     getList({ commit }) {
       return api.get()
-        .then(res => commit('SET_LIST', res))
+        .then((res) => commit('SET_LIST', res))
         .catch(console.err) // eslint-disable-line no-console
     },
 
@@ -59,7 +59,7 @@ export default new Vuex.Store({
 
     filter({ commit }, params) {
       return api.get('', { params })
-        .then(res => commit('SET_LIST', res))
+        .then((res) => commit('SET_LIST', res))
         .catch(console.err) // eslint-disable-line no-console
     },
   },

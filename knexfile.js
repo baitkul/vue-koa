@@ -19,6 +19,4 @@ module.exports = {
   seeds: {
     directory: './server/seeds'
   },
-
-  debug: true
 }

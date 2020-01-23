@@ -40,7 +40,7 @@ router.route({
       author: Joi.string().required(),
       description: Joi.string().required(),
     },
-    type: 'application/json'
+    type: 'json'
   },
   handler: controller.create
 })
@@ -59,7 +59,7 @@ router.route({
       author: Joi.string().optional(),
       description: Joi.string().optional(),
     },
-    type: 'application/json'
+    type: 'json'
   },
   handler: controller.update
 })

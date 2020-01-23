@@ -16,5 +16,5 @@ Vue.use(ElementUI, { locale: localeRu, size: 'small' })
 new Vue({
   router,
   store,
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app')
