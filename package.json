@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "element-ui": "^2.13.0",
     "esm": "^3.2.25",
